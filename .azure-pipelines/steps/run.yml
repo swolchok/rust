@@ -88,8 +88,9 @@ steps:
 #
 # If matches for '\r' are found, we should immediately exit the build.
 - bash: |
+    set -x
     git config --list
-    egrep -l $'\r'\$ src/tools/rust-installer/install-template.sh && exit 1
+    (egrep -l $'\r'\$ src/tools/rust-installer/install-template.sh && exit 1) || true
   displayName: Verify line endings are LF
 
 # Ensure the `aws` CLI is installed so we can deploy later on, cache docker

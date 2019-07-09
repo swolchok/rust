@@ -84,6 +84,15 @@ steps:
   condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
   displayName: Check out submodules (Windows)
 
+# See also the disable for autocrlf above, this just checks that it worked
+#
+# If matches for '\r' are found, we should immediately exit the build.
+- bash: |
+    set -x
+    git config --list
+    (egrep -l $'\r'\$ src/tools/rust-installer/install-template.sh && exit 1) || true
+  displayName: Verify line endings are LF
+
 # Ensure the `aws` CLI is installed so we can deploy later on, cache docker
 # images, etc.
 - bash: |

@@ -88,6 +88,7 @@ steps:
 #
 # If matches for '\r' are found, we should immediately exit the build.
 - bash: |
+    git config --list
     egrep -l $'\r'\$ src/tools/rust-installer/install-template.sh && exit 1
   displayName: Verify line endings are LF
 
